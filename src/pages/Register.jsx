@@ -29,7 +29,7 @@ export function Register() {
                 </div>
 
                 <div className="pt-6 pb-4">
-                    <Title title="Bem-vindo de volta" />
+                    <Title title="Explore novos lugares!" />
                 </div>
 
                 <form onSubmit={handleSubmit}>
@@ -72,7 +72,7 @@ export function Register() {
                 </form>
 
                 <div className="text-center pt-8">
-                    <Link to="/login" className="text-blue-600 hover:underline">
+                    <Link to="/login" style={{ color: "#fff", textDecoration: "underline" }}>
                         Já tem cadastro? <strong>Faça Login</strong>
                     </Link>
                 </div>

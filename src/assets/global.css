@@ -3,3 +3,17 @@
 html, body, #root {
     height: 100%;
 }
+
+body {
+  background-image:
+    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+    url("/TelaFundo.PNG");
+  background-size: contain; 
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: black;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

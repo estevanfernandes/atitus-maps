@@ -3,7 +3,7 @@ import "./logo.css";
 export const Logo = () => {
   return (
     <div className="logo">
-      <div className="text-wrapper">Logotipo</div>
+      <img src="/src/assets/Logo.PNG" alt="Logotipo" className="logo-img" />
     </div>
   );
 };

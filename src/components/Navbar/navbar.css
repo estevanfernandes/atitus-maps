@@ -1,14 +1,25 @@
 .navbar {
-    align-items: center;
-    background-color: #000;
-    color: #fff;
-    display: flex;
-    font-size: 16px;
-    justify-content: space-between;
-    padding: 20px 40px;
+  width: 100%;
+  background: rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  box-sizing: border-box;
 }
 
-.navbar .close {
-    background-color: transparent;
-    border: none;
+.navbar-title {
+  flex: 1;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+}
+
+.close {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  margin-left: 16px;
 }

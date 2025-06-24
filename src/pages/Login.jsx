@@ -25,20 +25,20 @@ export function Login() {
 
   return (
     <>
+    
       <div className="max-w-md mx-auto p-4">
         <div className="text-center">
           <Logo />
         </div>
 
         <div className="pt-6 pb-4">
-          <Title title="Faça seu cadastro" />
+          <Title title="Explore novos lugares!" />
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className="pb-4">
             <Input
-              label="Email"
-              placeholder="Digite seu email..."
+              placeholder="E-mail"
               type="email"
               required
               value={email}
@@ -47,8 +47,7 @@ export function Login() {
           </div>
           <div className="pb-4">
             <Input
-              label="Senha"
-              placeholder="Digite sua senha..."
+              placeholder="Senha"
               type="password"
               required
               value={senha}
@@ -65,9 +64,9 @@ export function Login() {
         <div className="text-center pt-8">
           <Link
             to="/register"
-            className="text-blue-600 hover:underline"
+            style={{ color: "#fff", textDecoration: "underline" }}
           >
-            Faça seu cadastro
+            Ainda não tem conta? Clique aqui e cadastre-se.
           </Link>
         </div>
       </div>
