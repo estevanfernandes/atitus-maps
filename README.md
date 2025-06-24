@@ -1,16 +1,9 @@
-# Atitus Maps
+# City Tour
 
 ## Sobre o Projeto
 
-O **Atitus Maps** é uma aplicação web que permite visualizar e cadastrar pontos geográficos em um mapa interativo. Usuários autenticados podem adicionar novos pontos clicando no mapa, que são salvos em um backend e exibidos para todos.
-
-## Como iniciar este exercício
-
-Clique em **Copiar Exercício** e abra o link em uma nova aba.
-
-   <a id="copy-exercise" target="_blank" href="https://github.com/new?template_name=atitus-maps&template_owner=jaisonschmidt&name=atitus-maps&owner=%40me&visibility=public">
-      <img src="https://img.shields.io/badge/📠_Copiar_Exercício-008000" height="25pt"/>
-   </a>
+**City Tour** é um app voltado para descoberta urbana com foco em turismo local e experiências culturais. 
+A ideia central é permitir que moradores e visitantes explorem pontos turísticos da cidade de forma prática, personalizada e envolvente.
 
 ## Funcionalidades
 
