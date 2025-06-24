@@ -1,9 +1,29 @@
+.input-group {
+  width: 100%;
+  margin-bottom: 8px;
+}
+
+.input-label {
+  color: #fff;
+  font-weight: 500;
+  margin-bottom: 4px;
+  display: block;
+}
+
 .input {
-    border: 2px solid #000;
-    border-radius: 10px;
-    display: block;
-    padding: 10px;
-    width: 100%;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.9);
+  color: #222;
+  margin-bottom: 0;
+  outline: none;
+  box-sizing: border-box;
+}
 
-
+.input:focus {
+  border: 2px solid #22c55e;
+  background: #fff;
 }

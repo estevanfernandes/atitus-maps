@@ -1,6 +1,6 @@
 import "./title.css";
 
-export const Title = ({title}) => {
+export const Title = ({ title }) => {
   return (
     <div className="title">
       <div className="text-wrapper">{title}</div>
