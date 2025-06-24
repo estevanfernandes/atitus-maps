@@ -4,17 +4,21 @@ import { Link, useNavigate } from "react-router-dom";
 import { signUp } from "../services/authService";
 
 export function Register() {
-    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
+    const [confirmarSenha, setConfirmarSenha] = useState("");
     const [erro, setErro] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErro("");
+        if (senha !== confirmarSenha) {
+            setErro("As senhas não coincidem.");
+            return;
+        }
         try {
-            await signUp(name, email, senha);
+            await signUp(email, senha);
             navigate("/login");
         } catch (err) {
             setErro(err.message);
@@ -23,7 +27,7 @@ export function Register() {
 
     return (
         <>
-            <div className="max-w-md mx-auto p-4">
+            <div className="max-w-md mx-auto px-6 py-8 relative z-10">
                 <div className="text-center">
                     <Logo />
                 </div>
@@ -35,18 +39,8 @@ export function Register() {
                 <form onSubmit={handleSubmit}>
                     <div className="pb-4">
                         <Input
-                            label="Nome"
-                            placeholder="Digite seu nome..."
-                            type="text"
-                            required
-                            value={name}
-                            onChange={e => setName(e.target.value)}
-                        />
-                    </div>
-                    <div className="pb-4">
-                        <Input
-                            label="Email"
-                            placeholder="Digite seu email..."
+                            label="E-mail:"
+                            placeholder=""
                             type="email"
                             required
                             value={email}
@@ -55,19 +49,34 @@ export function Register() {
                     </div>
                     <div className="pb-4">
                         <Input
-                            label="Senha"
-                            placeholder="Digite sua senha..."
+                            label="Senha:"
+                            placeholder=""
                             type="password"
                             required
                             value={senha}
                             onChange={e => setSenha(e.target.value)}
                         />
                     </div>
+                    <div className="pb-4">
+                        <Input
+                            label="Confirmar senha:"
+                            placeholder=""
+                            type="password"
+                            required
+                            value={confirmarSenha}
+                            onChange={e => setConfirmarSenha(e.target.value)}
+                        />
+                    </div>
 
                     {erro && <p style={{ color: "red" }}>{erro}</p>}
 
                     <div className="text-center pt-4">
-                        <Button type="submit">Cadastrar</Button>
+                        <Button type="submit">
+                            <span className="inline-flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M12 5a1 1 0 0 1 1 1v5h5a1 1 0 1 1 0 2h-5v5a1 1 0 1 1-2 0v-5H6a1 1 0 1 1 0-2h5V6a1 1 0 0 1 1-1Z" /></svg>
+                                Criar conta
+                            </span>
+                        </Button>
                     </div>
                 </form>
 

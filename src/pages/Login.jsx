@@ -25,20 +25,21 @@ export function Login() {
 
   return (
     <>
-    
-      <div className="max-w-md mx-auto p-4">
+
+      <div className="max-w-md mx-auto px-6 py-8 relative z-10">
         <div className="text-center">
           <Logo />
         </div>
 
-        <div className="pt-6 pb-4">
+        <div className="pt-8 pb-6">
           <Title title="Explore novos lugares!" />
         </div>
 
         <form onSubmit={handleSubmit}>
           <div className="pb-4">
             <Input
-              placeholder="E-mail"
+              label="E-mail:"
+              placeholder=""
               type="email"
               required
               value={email}
@@ -47,7 +48,8 @@ export function Login() {
           </div>
           <div className="pb-4">
             <Input
-              placeholder="Senha"
+              label="Senha:"
+              placeholder=""
               type="password"
               required
               value={senha}
@@ -57,16 +59,25 @@ export function Login() {
           {erro && <p style={{ color: "red" }}>{erro}</p>}
 
           <div className="text-center pt-4">
-            <Button type="submit">Acessar</Button>
+            <Button type="submit">
+              <span className="inline-flex items-center gap-2">
+                {/* Ícone de usuário SVG */}
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                  <circle cx="12" cy="8" r="4" fill="currentColor" />
+                  <path fill="currentColor" d="M4 20c0-2.21 3.58-4 8-4s8 1.79 8 4v1H4v-1z" />
+                </svg>
+                Acessar
+              </span>
+            </Button>
           </div>
         </form>
 
         <div className="text-center pt-8">
           <Link
             to="/register"
-            style={{ color: "#fff", textDecoration: "underline" }}
+            className="text-white underline text-sm"
           >
-            Ainda não tem conta? Clique aqui e cadastre-se.
+            Ainda não tem conta? <strong> Clique aqui e cadastre-se.</strong>
           </Link>
         </div>
       </div>

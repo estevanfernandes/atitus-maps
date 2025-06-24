@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 html, body, #root {
@@ -5,10 +6,11 @@ html, body, #root {
 }
 
 body {
+  font-family: 'Inter', sans-serif;
   background-image:
-    linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
-    url("/TelaFundo.PNG");
-  background-size: contain; 
+   url("/FundoTelas.jpg"),
+   linear-gradient(180deg, #ffffff 60%, #222 100%);
+  background-size: auto 100vh;     
   background-repeat: no-repeat;
   background-position: center;
   background-color: black;
@@ -16,4 +18,17 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+  overflow: hidden;
 }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 0;
+  pointer-events: none;
+}
+
+
