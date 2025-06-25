@@ -1,8 +1,6 @@
 import axios from 'axios';
 
 const BASE_URL = 'https://outside-wilona-jgmotta2-02732f12.koyeb.app/points';
-// Criar .env com VITE_GOOGLE_MAPS_API_KEY=AIzaSyD_XzHyJDu-8F2_-KhtdTbpp0P5Bm9j6B0 para teste local
-
 
 export async function getPoints(token) {
   try {
