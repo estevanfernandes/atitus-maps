@@ -4,21 +4,17 @@ import { Link, useNavigate } from "react-router-dom";
 import { signUp } from "../services/authService";
 
 export function Register() {
+    const [nome, setNome] = useState("");
     const [email, setEmail] = useState("");
     const [senha, setSenha] = useState("");
-    const [confirmarSenha, setConfirmarSenha] = useState("");
     const [erro, setErro] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErro("");
-        if (senha !== confirmarSenha) {
-            setErro("As senhas não coincidem.");
-            return;
-        }
         try {
-            await signUp(email, senha);
+            await signUp(email, senha, nome);
             navigate("/login");
         } catch (err) {
             setErro(err.message);
@@ -39,6 +35,16 @@ export function Register() {
                 <form onSubmit={handleSubmit}>
                     <div className="pb-4">
                         <Input
+                            label="Nome:"
+                            placeholder=""
+                            type="text"
+                            required
+                            value={nome}
+                            onChange={e => setNome(e.target.value)}
+                        />
+                    </div>
+                    <div className="pb-4">
+                        <Input
                             label="E-mail:"
                             placeholder=""
                             type="email"
@@ -57,17 +63,6 @@ export function Register() {
                             onChange={e => setSenha(e.target.value)}
                         />
                     </div>
-                    <div className="pb-4">
-                        <Input
-                            label="Confirmar senha:"
-                            placeholder=""
-                            type="password"
-                            required
-                            value={confirmarSenha}
-                            onChange={e => setConfirmarSenha(e.target.value)}
-                        />
-                    </div>
-
                     {erro && <p style={{ color: "red" }}>{erro}</p>}
 
                     <div className="text-center pt-4">

@@ -9,7 +9,7 @@ body {
   font-family: 'Inter', sans-serif;
   background-image:
    url("/FundoTelas.jpg"),
-   linear-gradient(180deg, #ffffff 60%, #222 100%);
+   linear-gradient(180deg, #ffffff 80%, #000000 100%);
   background-size: auto 100vh;     
   background-repeat: no-repeat;
   background-position: center;
