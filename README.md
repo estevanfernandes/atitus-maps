@@ -23,7 +23,7 @@ A ideia central é permitir que moradores e visitantes explorem pontos turístic
 
 1. **Clone o repositório:**
    ```bash
-   git clone https://github.com/seu-usuario/atitus-maps.git
+   git clone https://github.com/seu-usuario/city-tour.git
    cd atitus-maps
    ```
 
