@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://outside-wilona-jgmotta2-02732f12.koyeb.app/points';
+const BASE_URL = 'https://outside-wilona-jgmotta2-02732f12.koyeb.app/ws/points';
 
 export async function getPoints(token) {
   try {
@@ -9,6 +9,7 @@ export async function getPoints(token) {
         Authorization: `Bearer ${token}`,
       },
     });
+    
 
     const points = response.data.map(point => ({
       id: point.id,

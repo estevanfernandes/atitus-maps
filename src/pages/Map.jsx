@@ -1,27 +1,8 @@
-import { useEffect, useContext, useState } from "react";
-import { Navbar } from "../components";
+import { useEffect, useState } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { getPoints, postPoint } from '../services/mapService';
 import { useAuth } from "../contexts/AuthContext";
 
-const containerStyle = {
-  width: "100vw",
-  height: "100vh",
-  position: "relative",
-  overflow: "hidden",
-  margin: 0,
-  padding: 0,
-};
-
-const mapContainerStyle = {
-  width: "100vw",
-  height: "calc(100vh - 56px - 56px)",
-  marginTop: "56px",
-  marginBottom: "56px",
-};
-
-// Como pegar a posição atual do usuário?
-// Dica: use Geolocation API do navegador
 const center = {
   lat: -28.2628,
   lng: -52.4069,
@@ -30,6 +11,9 @@ const center = {
 export const Map = () => {
   const { token } = useAuth();
   const [markers, setMarkers] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [newPointCoords, setNewPointCoords] = useState(null);
+  const [form, setForm] = useState({ name: "", description: "" });
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
@@ -41,7 +25,7 @@ export const Map = () => {
         const data = await getPoints(token);
         setMarkers(data.map(point => ({
           id: point.id,
-          title: point.descricao || "Ponto",
+          title: point.description || point.name || "Ponto",
           position: { lat: point.latitude, lng: point.longitude }
         })));
       } catch (error) {
@@ -51,25 +35,36 @@ export const Map = () => {
     fetchMarkers();
   }, [token]);
 
-  const handleMapClick = async (event) => {
-    const lat = event.latLng.lat();
-    const lng = event.latLng.lng();
+  const handleMapClick = (event) => {
+    setNewPointCoords({
+      lat: event.latLng.lat(),
+      lng: event.latLng.lng(),
+    });
+    setForm({ name: "", description: "" });
+    setModalOpen(true);
+  };
+
+  const handleModalSubmit = async (e) => {
+    e.preventDefault();
+    if (!form.name || !form.description) return;
     const newPoint = {
-      latitude: lat,
-      longitude: lng,
-      descricao: "Descrição do ponto",
+      name: form.name,
+      description: form.description,
+      latitude: newPointCoords.lat,
+      longitude: newPointCoords.lng,
     };
     try {
       const savedPoint = await postPoint(token, newPoint);
       const savedMarker = {
         id: savedPoint.id,
-        title: savedPoint.descricao || "Novo Ponto",
+        title: savedPoint.description || "Novo Ponto",
         position: {
           lat: savedPoint.latitude,
           lng: savedPoint.longitude,
         },
       };
       setMarkers((prev) => [...prev, savedMarker]);
+      setModalOpen(false);
     } catch (error) {
       alert(error.message);
     }
@@ -209,6 +204,52 @@ export const Map = () => {
             </svg>
           </div>
         </div>
+
+        {/* novo ponto */}
+        {modalOpen && (
+          <div style={{
+            position: "fixed",
+            top: 0, left: 0, width: "100vw", height: "100vh",
+            background: "rgba(0,0,0,0.4)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            zIndex: 1000,
+          }}>
+            <form
+              onSubmit={handleModalSubmit}
+              style={{
+                background: "#fff",
+                padding: 24,
+                borderRadius: 12,
+                boxShadow: "0 4px 32px rgba(0,0,0,0.15)",
+                display: "flex",
+                flexDirection: "column",
+                minWidth: 280,
+                gap: 12,
+              }}
+            >
+              <h3 style={{ margin: 0, color: "#21B573" }}>Novo Ponto</h3>
+              <input
+                type="text"
+                placeholder="Nome"
+                value={form.name}
+                onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
+                style={{ padding: 8, borderRadius: 6, border: "1px solid #ccc" }}
+                required
+              />
+              <textarea
+                placeholder="Descrição"
+                value={form.description}
+                onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
+                style={{ padding: 8, borderRadius: 6, border: "1px solid #ccc", minHeight: 60 }}
+                required
+              />
+              <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
+                <button type="button" onClick={() => setModalOpen(false)} style={{ padding: "6px 16px", borderRadius: 6, border: "none", background: "#eee" }}>Cancelar</button>
+                <button type="submit" style={{ padding: "6px 16px", borderRadius: 6, border: "none", background: "#21B573", color: "#fff" }}>Salvar</button>
+              </div>
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );
