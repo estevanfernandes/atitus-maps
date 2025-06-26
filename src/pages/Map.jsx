@@ -23,11 +23,7 @@ export const Map = () => {
     async function fetchMarkers() {
       try {
         const data = await getPoints(token);
-        setMarkers(data.map(point => ({
-          id: point.id,
-          title: point.description || point.name || "Ponto",
-          position: { lat: point.latitude, lng: point.longitude }
-        })));
+        setMarkers(data); // 
       } catch (error) {
         console.log(error.message);
       }

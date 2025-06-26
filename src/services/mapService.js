@@ -48,3 +48,4 @@ export async function postPoint(token, pointData) {
     throw new Error(error.response?.data?.message || 'Erro ao cadastrar ponto');
   }
 }
+
