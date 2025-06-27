@@ -9,6 +9,7 @@ export function Register() {
     const [senha, setSenha] = useState("");
     const [erro, setErro] = useState("");
     const navigate = useNavigate();
+    const [showPasswordRules, setShowPasswordRules] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -61,7 +62,28 @@ export function Register() {
                             required
                             value={senha}
                             onChange={e => setSenha(e.target.value)}
+                            onFocus={() => setShowPasswordRules(true)}
+                            onBlur={() => setShowPasswordRules(false)}
                         />
+                        {showPasswordRules && (
+                            <div style={{
+                                background: "#f8fafc",
+                                border: "1px solid #ddd",
+                                borderRadius: 6,
+                                padding: "8px 12px",
+                                fontSize: 13,
+                                color: "#333",
+                                marginTop: 6
+                            }}>
+                                A senha deve conter:
+                                <ul style={{ margin: 0, paddingLeft: 18 }}>
+                                    <li>Uma letra maiúscula</li>
+                                    <li>Uma letra minúscula</li>
+                                    <li>Um Número</li>
+                                    <li>Um caractere especial (ex: !@#$%)</li>
+                                </ul>
+                            </div>
+                        )}
                     </div>
                     {erro && <p style={{ color: "red" }}>{erro}</p>}
 

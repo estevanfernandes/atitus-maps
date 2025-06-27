@@ -56,8 +56,8 @@ export const Map = () => {
       const savedPoint = await postPoint(token, newPoint);
       const savedMarker = {
         id: savedPoint.id,
-        title: savedPoint.name, // Corrigido para mostrar o nome
-        description: savedPoint.description, // Adicionado para mostrar a descrição
+        title: savedPoint.name,
+        description: savedPoint.description,
         position: {
           lat: savedPoint.latitude,
           lng: savedPoint.longitude,
@@ -71,14 +71,7 @@ export const Map = () => {
   };
 
   return (
-    <div style={{
-      width: "100vw",
-      height: "100vh",
-      background: "#f5f5f5",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
-    }}>
+    <div className="map-background">
       <div style={{
         width: "100%",
         maxWidth: 400,
