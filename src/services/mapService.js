@@ -11,7 +11,7 @@ export async function getPoints(token) {
     });
     
 
-    const points = response.data.map(point => ({
+    const points = response.data.content.map(point => ({
       id: point.id,
       title: point.descricao,
       position: {

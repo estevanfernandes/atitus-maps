@@ -8,7 +8,7 @@ html, body, #root {
 
 body {
   background-image:
-    url("/FundoTelas1-desktop.jpg"),
+    url("/FundoTelas-desktop.png"),
     linear-gradient(180deg, #ffffff 80%, #16a34a 100%);
   background-size: cover, cover;
   background-repeat: no-repeat;

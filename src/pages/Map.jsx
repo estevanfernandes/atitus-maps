@@ -20,15 +20,16 @@ export const Map = () => {
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
   });
 
-  useEffect(() => {
-    async function fetchMarkers() {
-      try {
-        const data = await getPoints(token);
-        setMarkers(data);
-      } catch (error) {
-        console.log(error.message);
-      }
+  async function fetchMarkers() {
+    try {
+      const data = await getPoints(token);
+      setMarkers(data);
+    } catch (error) {
+      console.log(error.message);
     }
+  }
+
+  useEffect(() => {
     fetchMarkers();
   }, [token]);
 
@@ -44,25 +45,18 @@ export const Map = () => {
   const handleModalSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.description) return;
+
     const newPoint = {
       name: form.name,
       description: form.description,
       latitude: newPointCoords.lat,
       longitude: newPointCoords.lng,
     };
+
     try {
-      const savedPoint = await postPoint(token, newPoint);
-      const savedMarker = {
-        id: savedPoint.id,
-        title: savedPoint.name,
-        description: savedPoint.description,
-        position: {
-          lat: savedPoint.latitude,
-          lng: savedPoint.longitude,
-        },
-      };
-      setMarkers((prev) => [...prev, savedMarker]);
+      await postPoint(token, newPoint);
       setModalOpen(false);
+      fetchMarkers();
     } catch (error) {
       alert(error.message);
     }
