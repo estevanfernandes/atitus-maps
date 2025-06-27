@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { getPoints, postPoint } from '../services/mapService';
 import { useAuth } from "../contexts/AuthContext";
-import { InfoWindow } from "@react-google-maps/api";
-
 
 const center = {
   lat: -28.2628,
@@ -26,7 +24,7 @@ export const Map = () => {
     async function fetchMarkers() {
       try {
         const data = await getPoints(token);
-        setMarkers(data); // 
+        setMarkers(data);
       } catch (error) {
         console.log(error.message);
       }
@@ -72,17 +70,21 @@ export const Map = () => {
 
   return (
     <div className="map-background">
-      <div style={{
-        width: "100%",
-        maxWidth: 400,
-        height: "100vh",
-        background: "#fff",
-        boxShadow: "0 0 16px rgba(0,0,0,0.08)",
-        position: "relative",
-        overflow: "hidden",
-        display: "flex",
-        flexDirection: "column",
-      }}>
+      <div
+        style={{
+          width: "100%",
+          maxWidth: 400,
+          height: "100vh",
+          background: "#fff",
+          boxShadow: "0 0 16px rgba(0,0,0,0.08)",
+          position: "relative",
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+          border: "3px solid #21B573",
+          borderRadius: 22,
+        }}
+      >
         {/* Navbar fixa */}
         <div style={{
           position: "fixed",
@@ -153,60 +155,6 @@ export const Map = () => {
                   onClick={() => setSelectedMarker(marker)}
                 />
               ))}
-              {selectedMarker && (
-                <InfoWindow
-                  position={selectedMarker.position}
-                  onCloseClick={() => setSelectedMarker(null)}
-                >
-                  <div
-                    style={{
-                      background: "linear-gradient(135deg, #21B573 0%, #43E97B 100%)",
-                      borderRadius: 16,
-                      boxShadow: "0 8px 32px rgba(33,181,115,0.18)",
-                      padding: 20,
-                      minWidth: 240,
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: 10,
-                      color: "#fff",
-                      border: "2px solid #fff",
-                      position: "relative",
-                    }}
-                  >
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: 10,
-                      marginBottom: 6,
-                    }}>
-                      <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" style={{ filter: "drop-shadow(0 2px 6px #21B57388)" }}>
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
-                      </svg>
-                      <h3 style={{
-                        margin: 0,
-                        fontWeight: 700,
-                        fontSize: 20,
-                        letterSpacing: 1,
-                        textShadow: "0 2px 8px #21B57344",
-                      }}>{selectedMarker.title}</h3>
-                    </div>
-                    <p style={{
-                      margin: 0,
-                      fontSize: 15.5,
-                      lineHeight: 1.5,
-                      background: "rgba(255,255,255,0.12)",
-                      borderRadius: 8,
-                      padding: "8px 12px",
-                      color: "#fff",
-                      fontWeight: 400,
-                      whiteSpace: "pre-line",
-                      boxShadow: "0 1px 4px #21B57322",
-                    }}>
-                      {selectedMarker.description}
-                    </p>
-                  </div>
-                </InfoWindow>
-              )}
             </GoogleMap>
           ) : (
             <div>Carregando mapa...</div>
@@ -253,47 +201,279 @@ export const Map = () => {
           </div>
         </div>
 
-        {/* novo ponto */}
+        {/* Modal de detalhes do ponto */}
+        {selectedMarker && (
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              background: "rgba(0,0,0,0.45)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 2000,
+              backdropFilter: "blur(2px)",
+              borderRadius: 22,
+            }}
+          >
+            <div
+              style={{
+                background: "#fff",
+                padding: "32px 28px 24px 28px",
+                borderRadius: 18,
+                boxShadow: "0 8px 32px rgba(33,181,115,0.18)",
+                minWidth: 320,
+                maxWidth: 380,
+                width: "90vw",
+                position: "relative",
+                fontFamily: "Inter, Arial, sans-serif",
+                display: "flex",
+                flexDirection: "column",
+                gap: 18,
+              }}
+            >
+              <button
+                type="button"
+                onClick={() => setSelectedMarker(null)}
+                style={{
+                  position: "absolute",
+                  top: 18,
+                  right: 18,
+                  background: "none",
+                  border: "none",
+                  fontSize: 22,
+                  color: "#21B573",
+                  cursor: "pointer",
+                  fontWeight: 700,
+                }}
+                aria-label="Fechar"
+              >
+                ×
+              </button>
+              <h2
+                style={{
+                  margin: 0,
+                  color: "#21B573",
+                  fontWeight: 800,
+                  fontSize: 22,
+                  letterSpacing: 1,
+                  textAlign: "center",
+                }}
+              >
+                Detalhes do Ponto
+              </h2>
+              <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+                <label style={{ color: "#21B573", fontWeight: 700, fontSize: 15, marginBottom: 2 }}>
+                  Nome
+                </label>
+                <div
+                  style={{
+                    background: "#f7faf9",
+                    borderRadius: 8,
+                    padding: "10px 14px",
+                    color: "#222",
+                    fontWeight: 600,
+                    fontSize: 16,
+                    boxShadow: "0 1px 4px #21B57311",
+                    marginBottom: 8,
+                  }}
+                >
+                  {selectedMarker.title}
+                </div>
+                <label style={{ color: "#21B573", fontWeight: 700, fontSize: 15, marginBottom: 2 }}>
+                  Descrição
+                </label>
+                <div
+                  style={{
+                    background: "rgba(33,181,115,0.07)",
+                    borderRadius: 8,
+                    padding: "12px 14px",
+                    color: "#333",
+                    fontWeight: 400,
+                    fontSize: 15.5,
+                    lineHeight: 1.6,
+                    whiteSpace: "pre-line",
+                    boxShadow: "0 1px 4px #21B57311",
+                    minHeight: 50,
+                    marginBottom: 8,
+                  }}
+                >
+                  {selectedMarker.description}
+                </div>
+                <label style={{ color: "#21B573", fontWeight: 700, fontSize: 15, marginBottom: 2 }}>
+                  Latitude
+                </label>
+                <div
+                  style={{
+                    background: "#f7faf9",
+                    borderRadius: 8,
+                    padding: "8px 14px",
+                    color: "#222",
+                    fontWeight: 500,
+                    fontSize: 15,
+                    boxShadow: "0 1px 4px #21B57311",
+                    marginBottom: 8,
+                  }}
+                >
+                  {selectedMarker.position.lat}
+                </div>
+                <label style={{ color: "#21B573", fontWeight: 700, fontSize: 15, marginBottom: 2 }}>
+                  Longitude
+                </label>
+                <div
+                  style={{
+                    background: "#f7faf9",
+                    borderRadius: 8,
+                    padding: "8px 14px",
+                    color: "#222",
+                    fontWeight: 500,
+                    fontSize: 15,
+                    boxShadow: "0 1px 4px #21B57311",
+                  }}
+                >
+                  {selectedMarker.position.lng}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Modal de cadastro de novo ponto */}
         {modalOpen && (
-          <div style={{
-            position: "fixed",
-            top: 0, left: 0, width: "100vw", height: "100vh",
-            background: "rgba(0,0,0,0.4)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            zIndex: 1000,
-          }}>
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              background: "rgba(0,0,0,0.45)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              zIndex: 1000,
+              backdropFilter: "blur(2px)",
+              borderRadius: 22,
+            }}
+          >
             <form
               onSubmit={handleModalSubmit}
               style={{
                 background: "#fff",
-                padding: 24,
-                borderRadius: 12,
-                boxShadow: "0 4px 32px rgba(0,0,0,0.15)",
+                padding: "32px 28px 24px 28px",
+                borderRadius: 18,
+                boxShadow: "0 8px 32px rgba(33,181,115,0.18)",
                 display: "flex",
                 flexDirection: "column",
-                minWidth: 280,
-                gap: 12,
+                minWidth: 320,
+                maxWidth: 380,
+                gap: 18,
+                position: "relative",
+                fontFamily: "Inter, Arial, sans-serif",
               }}
             >
-              <h3 style={{ margin: 0, color: "#21B573" }}>Novo Ponto</h3>
+              <button
+                type="button"
+                onClick={() => setModalOpen(false)}
+                style={{
+                  position: "absolute",
+                  top: 18,
+                  right: 18,
+                  background: "none",
+                  border: "none",
+                  fontSize: 22,
+                  color: "#21B573",
+                  cursor: "pointer",
+                  fontWeight: 700,
+                }}
+                aria-label="Fechar"
+              >
+                ×
+              </button>
+              <h2
+                style={{
+                  margin: 0,
+                  color: "#21B573",
+                  fontWeight: 800,
+                  fontSize: 24,
+                  letterSpacing: 1,
+                  textAlign: "center",
+                }}
+              >
+                Novo Ponto
+              </h2>
               <input
                 type="text"
-                placeholder="Nome"
+                placeholder="Nome do ponto"
                 value={form.name}
                 onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-                style={{ padding: 8, borderRadius: 6, border: "1px solid #ccc" }}
+                style={{
+                  padding: "12px 14px",
+                  borderRadius: 8,
+                  border: "1.5px solid #21B57355",
+                  fontSize: 16,
+                  outline: "none",
+                  transition: "border 0.2s",
+                  boxShadow: "0 2px 8px #21B57311",
+                }}
                 required
+                autoFocus
               />
               <textarea
                 placeholder="Descrição"
                 value={form.description}
                 onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
-                style={{ padding: 8, borderRadius: 6, border: "1px solid #ccc", minHeight: 60 }}
+                style={{
+                  padding: "12px 14px",
+                  borderRadius: 8,
+                  border: "1.5px solid #21B57355",
+                  fontSize: 15,
+                  minHeight: 70,
+                  resize: "vertical",
+                  outline: "none",
+                  transition: "border 0.2s",
+                  boxShadow: "0 2px 8px #21B57311",
+                }}
                 required
               />
-              <div style={{ display: "flex", gap: 8, justifyContent: "flex-end" }}>
-                <button type="button" onClick={() => setModalOpen(false)} style={{ padding: "6px 16px", borderRadius: 6, border: "none", background: "#eee" }}>Cancelar</button>
-                <button type="submit" style={{ padding: "6px 16px", borderRadius: 6, border: "none", background: "#21B573", color: "#fff" }}>Salvar</button>
+              <div style={{ display: "flex", gap: 12, justifyContent: "flex-end", marginTop: 6 }}>
+                <button
+                  type="button"
+                  onClick={() => setModalOpen(false)}
+                  style={{
+                    padding: "8px 22px",
+                    borderRadius: 7,
+                    border: "none",
+                    background: "#eee",
+                    color: "#222",
+                    fontWeight: 600,
+                    fontSize: 15,
+                    cursor: "pointer",
+                    transition: "background 0.2s",
+                  }}
+                >
+                  Cancelar
+                </button>
+                <button
+                  type="submit"
+                  style={{
+                    padding: "8px 22px",
+                    borderRadius: 7,
+                    border: "none",
+                    background: "linear-gradient(90deg, #21B573 0%, #43E97B 100%)",
+                    color: "#fff",
+                    fontWeight: 700,
+                    fontSize: 15,
+                    cursor: "pointer",
+                    boxShadow: "0 2px 8px #21B57322",
+                    transition: "background 0.2s",
+                  }}
+                >
+                  Salvar
+                </button>
               </div>
             </form>
           </div>
