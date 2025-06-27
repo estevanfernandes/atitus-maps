@@ -7,19 +7,28 @@ html, body, #root {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
   background-image:
-    url("/FundoTelas1.jpg"),
+    url("/FundoTelas1-desktop.jpg"),
     linear-gradient(180deg, #ffffff 80%, #16a34a 100%);
-  background-size: cover;
+  background-size: cover, cover;
   background-repeat: no-repeat;
-  background-position: center;
-  background-color: black;
+  background-position: center center;
+  background-attachment: fixed;
   min-height: 100vh;
   height: 100%;
   position: relative;
   overflow-x: hidden;
   overflow-y: auto;
+}
+
+@media (max-aspect-ratio: 9/16) {
+  body {
+    background-image:
+      url("/FundoTelas1-mobile.jpg"),
+      linear-gradient(180deg, #ffffff 80%, #16a34a 100%);
+    background-size: cover, cover;
+    background-position: center center;
+  }
 }
 
 body::before {
