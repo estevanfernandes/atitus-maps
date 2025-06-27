@@ -167,18 +167,48 @@ export const Map = () => {
                 >
                   <div
                     style={{
-                      background: "#fff",
-                      borderRadius: 12,
-                      boxShadow: "0 4px 32px rgba(0,0,0,0.10)",
-                      padding: 16,
-                      minWidth: 220,
+                      background: "linear-gradient(135deg, #21B573 0%, #43E97B 100%)",
+                      borderRadius: 16,
+                      boxShadow: "0 8px 32px rgba(33,181,115,0.18)",
+                      padding: 20,
+                      minWidth: 240,
                       display: "flex",
                       flexDirection: "column",
-                      gap: 8,
+                      gap: 10,
+                      color: "#fff",
+                      border: "2px solid #fff",
+                      position: "relative",
                     }}
                   >
-                    <h3 style={{ margin: 0, color: "#21B573", fontSize: 18 }}>{selectedMarker.title}</h3>
-                    <p style={{ margin: 0, color: "#444", fontSize: 15, whiteSpace: "pre-line" }}>
+                    <div style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 10,
+                      marginBottom: 6,
+                    }}>
+                      <svg width="28" height="28" viewBox="0 0 24 24" fill="#fff" style={{ filter: "drop-shadow(0 2px 6px #21B57388)" }}>
+                        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                      </svg>
+                      <h3 style={{
+                        margin: 0,
+                        fontWeight: 700,
+                        fontSize: 20,
+                        letterSpacing: 1,
+                        textShadow: "0 2px 8px #21B57344",
+                      }}>{selectedMarker.title}</h3>
+                    </div>
+                    <p style={{
+                      margin: 0,
+                      fontSize: 15.5,
+                      lineHeight: 1.5,
+                      background: "rgba(255,255,255,0.12)",
+                      borderRadius: 8,
+                      padding: "8px 12px",
+                      color: "#fff",
+                      fontWeight: 400,
+                      whiteSpace: "pre-line",
+                      boxShadow: "0 1px 4px #21B57322",
+                    }}>
                       {selectedMarker.description}
                     </p>
                   </div>
