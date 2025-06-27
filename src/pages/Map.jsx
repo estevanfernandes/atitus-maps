@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { GoogleMap, Marker, useJsApiLoader } from "@react-google-maps/api";
 import { getPoints, postPoint } from '../services/mapService';
 import { useAuth } from "../contexts/AuthContext";
+import { InfoWindow } from "@react-google-maps/api";
+
 
 const center = {
   lat: -28.2628,
@@ -9,6 +11,7 @@ const center = {
 };
 
 export const Map = () => {
+  const [selectedMarker, setSelectedMarker] = useState(null);
   const { token } = useAuth();
   const [markers, setMarkers] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -53,7 +56,8 @@ export const Map = () => {
       const savedPoint = await postPoint(token, newPoint);
       const savedMarker = {
         id: savedPoint.id,
-        title: savedPoint.description || "Novo Ponto",
+        title: savedPoint.name, // Corrigido para mostrar o nome
+        description: savedPoint.description, // Adicionado para mostrar a descrição
         position: {
           lat: savedPoint.latitude,
           lng: savedPoint.longitude,
@@ -153,8 +157,33 @@ export const Map = () => {
                     url: "https://maps.google.com/mapfiles/ms/icons/red-dot.png",
                     scaledSize: { width: 40, height: 40 }
                   }}
+                  onClick={() => setSelectedMarker(marker)}
                 />
               ))}
+              {selectedMarker && (
+                <InfoWindow
+                  position={selectedMarker.position}
+                  onCloseClick={() => setSelectedMarker(null)}
+                >
+                  <div
+                    style={{
+                      background: "#fff",
+                      borderRadius: 12,
+                      boxShadow: "0 4px 32px rgba(0,0,0,0.10)",
+                      padding: 16,
+                      minWidth: 220,
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 8,
+                    }}
+                  >
+                    <h3 style={{ margin: 0, color: "#21B573", fontSize: 18 }}>{selectedMarker.title}</h3>
+                    <p style={{ margin: 0, color: "#444", fontSize: 15, whiteSpace: "pre-line" }}>
+                      {selectedMarker.description}
+                    </p>
+                  </div>
+                </InfoWindow>
+              )}
             </GoogleMap>
           ) : (
             <div>Carregando mapa...</div>
