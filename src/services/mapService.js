@@ -9,11 +9,12 @@ export async function getPoints(token) {
         Authorization: `Bearer ${token}`,
       },
     });
-    
+
 
     const points = response.data.content.map(point => ({
       id: point.id,
-      title: point.descricao,
+      title: point.name,
+      description: point.description,
       position: {
         lat: point.latitude,
         lng: point.longitude,
